@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+import br.com.texoit.movielist.movie.domain.Movie;
+
 @Component
 public class MovieDataLoader implements ApplicationRunner {
 

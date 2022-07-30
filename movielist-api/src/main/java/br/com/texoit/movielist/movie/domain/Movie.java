@@ -1,4 +1,4 @@
-package br.com.texoit.movielist.movie;
+package br.com.texoit.movielist.movie.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
