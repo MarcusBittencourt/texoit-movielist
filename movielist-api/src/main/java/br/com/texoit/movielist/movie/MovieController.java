@@ -2,6 +2,8 @@ package br.com.texoit.movielist.movie;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,12 +39,12 @@ public class MovieController {
   } 
 
   @PostMapping(path = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Movie> save(@RequestBody Movie movie) {
+  public ResponseEntity<Movie> save(@Valid @RequestBody Movie movie) {
     return new ResponseEntity<>(this.movieService.save(movie), HttpStatus.CREATED);
   }
 
   @PutMapping(path = "/movies/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Movie> update(@PathVariable("id") Long id, @RequestBody Movie movie) {
+  public ResponseEntity<Movie> update(@Valid @PathVariable("id") Long id, @RequestBody Movie movie) {
     return this.movieService.findById(id).map(
       found -> {
         movie.setId(id);
