@@ -5,6 +5,8 @@ import com.opencsv.exceptions.CsvBeanIntrospectionException;
 import com.opencsv.exceptions.CsvChainedException;
 import com.opencsv.exceptions.CsvFieldAssignmentException;
 
+import br.com.texoit.movielist.movie.domain.Movie;
+
 public class MovieMappingStrategy extends ColumnPositionMappingStrategy {
   
   public MovieMappingStrategy() {
@@ -19,7 +21,7 @@ public class MovieMappingStrategy extends ColumnPositionMappingStrategy {
     movie.setTitle(line[1]);
     movie.setStudios(line[2]);
     movie.setProducers(line[3]);
-    movie.setWinner(line[4] == "yes");
+    movie.setWinner(line[4].equalsIgnoreCase("yes"));
     return movie;
   }
 }
