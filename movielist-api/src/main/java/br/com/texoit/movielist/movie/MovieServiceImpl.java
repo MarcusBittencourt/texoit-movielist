@@ -45,20 +45,24 @@ public class MovieServiceImpl implements MovieService {
     winners.forEach(winner -> {
       MovieWinnerIntervalsDTO movieInterval = new MovieWinnerIntervalsDTO();
       Boolean winnerExists = intervals.containsKey(winner.getProducers());
+
       if(winnerExists) movieInterval = intervals.get(winner.getProducers());
       else movieInterval.setProducer(winner.getProducers());
+
       if(movieInterval.getPreviousWin() == null || winner.getYear() < movieInterval.getPreviousWin()) 
         movieInterval.setPreviousWin(winner.getYear());
+
       if(movieInterval.getFollowingWin() == null || winner.getYear() > movieInterval.getFollowingWin())
         movieInterval.setFollowingWin(winner.getYear());
+
       movieInterval.setInterval(movieInterval.getFollowingWin() - movieInterval.getPreviousWin());
       intervals.put(winner.getProducers(), movieInterval);
     });
     
     Map<String, Optional<MovieWinnerIntervalsDTO>> result = new HashMap<String, Optional<MovieWinnerIntervalsDTO>>();
     Comparator<MovieWinnerIntervalsDTO> comparator = Comparator.comparing(MovieWinnerIntervalsDTO::getInterval);
-    result.put("min", intervals.values().stream().min(comparator));
-    result.put("max", intervals.values().stream().max(comparator));
+    result.put("min", intervals.values().stream().filter(interval -> interval.getInterval() > 0).min(comparator));
+    result.put("max", intervals.values().stream().filter(interval -> interval.getInterval() > 0).max(comparator));
     return result;
   }
 
