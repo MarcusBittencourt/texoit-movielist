@@ -1,4 +1,4 @@
-package br.com.texoit.movielist.handlers;
+package br.com.texoit.movielist.shared.handlers;
 
 import java.time.LocalDateTime;
 import java.util.List;
