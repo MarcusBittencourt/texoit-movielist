@@ -16,13 +16,13 @@ public class Movie {
   @Column(name = "`YEAR`", nullable = false)
   private Integer year;
 
-  @Column(name = "TITLE", length = 50, nullable = false)
+  @Column(name = "TITLE", length = 80, nullable = false)
   private String title;
 
-  @Column(name = "STUDIOS", length = 50, nullable = false)
+  @Column(name = "STUDIOS", length = 80, nullable = false)
   private String studios;
 
-  @Column(name = "PRODUCERS", length = 80, nullable = false)
+  @Column(name = "PRODUCERS", length = 255, nullable = false)
   private String producers;
 
   @Column(name = "WINNER", nullable = true)
