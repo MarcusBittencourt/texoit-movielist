@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class HttpApplicationErrorResponse {
   
   private HttpStatus status;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy mm:HH:ss")
   private LocalDateTime timestamp;
   private String message;
   private List<String> details;
