@@ -18,7 +18,7 @@ public class Movie {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(name = "`YEAR`", nullable = false)
+  @Column(name = "RELEASE", nullable = false)
   @NotNull
   @Min(value = 1000)
   @Max(value = 3000)
@@ -36,7 +36,7 @@ public class Movie {
 
   @Column(name = "PRODUCERS", length = 255, nullable = false)
   @NotBlank(message = "producers is required")
-  @Size(max = 80, message = "studios must have less than 255 characters")
+  @Size(max = 255, message = "producers must have less than 255 characters")
   private String producers;
 
   @Column(name = "WINNER", nullable = true)

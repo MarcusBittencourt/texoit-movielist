@@ -1,6 +1,8 @@
 package br.com.texoit.movielist.movie;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.texoit.movielist.movie.domain.Movie;
+import br.com.texoit.movielist.movie.dto.MovieWinnerIntervalsDTO;
 
 @RestController("movies")
 public class MovieController {
@@ -62,5 +65,10 @@ public class MovieController {
         return new ResponseEntity<>(found, HttpStatus.OK); 
     })
     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  }
+
+  @GetMapping(path = "/movies/winners", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Map<String, Optional<MovieWinnerIntervalsDTO>>> winners() {
+    return new ResponseEntity<Map<String, Optional<MovieWinnerIntervalsDTO>>>(this.movieService.findWinnersIntervals(), HttpStatus.OK);
   }
 }
