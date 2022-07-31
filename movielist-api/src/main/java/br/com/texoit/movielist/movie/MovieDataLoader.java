@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.exceptions.CsvException;
+
+import br.com.texoit.movielist.movie.domain.Movie;
 
 @Component
 public class MovieDataLoader implements ApplicationRunner {
@@ -33,6 +34,7 @@ public class MovieDataLoader implements ApplicationRunner {
     Path path = Paths.get(resource.toURI());
     log.info("Locating csv data file %s".formatted(path.toAbsolutePath()));
     this.initDatabase(path);
+    log.info("Seed database was loaded!");
   }
 
   private void initDatabase(Path dataSource) throws IOException {
@@ -41,7 +43,6 @@ public class MovieDataLoader implements ApplicationRunner {
     if (presentData)
       return;
     this.loadDataFromCSV(dataSource);
-    log.info("Seed database was loaded!");
   }
 
   private void loadDataFromCSV(Path dataSource) throws IOException {

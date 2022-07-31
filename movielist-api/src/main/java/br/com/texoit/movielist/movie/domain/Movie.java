@@ -1,10 +1,15 @@
-package br.com.texoit.movielist.movie;
+package br.com.texoit.movielist.movie.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity(name = "MOVIES")
 public class Movie {
@@ -13,16 +18,25 @@ public class Movie {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(name = "`YEAR`", nullable = false)
+  @Column(name = "RELEASE", nullable = false)
+  @NotNull
+  @Min(value = 1000)
+  @Max(value = 3000)
   private Integer year;
-
-  @Column(name = "TITLE", length = 50, nullable = false)
+  
+  @Column(name = "TITLE", length = 80, nullable = false)
+  @NotBlank(message = "title is required")
+  @Size(max = 80, message = "title must have less than 80 characters")
   private String title;
 
-  @Column(name = "STUDIOS", length = 50, nullable = false)
+  @Column(name = "STUDIOS", length = 80, nullable = false)
+  @NotBlank(message = "studios is required")
+  @Size(max = 80, message = "studios must have less than 80 characters")
   private String studios;
 
-  @Column(name = "PRODUCERS", length = 80, nullable = false)
+  @Column(name = "PRODUCERS", length = 255, nullable = false)
+  @NotBlank(message = "producers is required")
+  @Size(max = 255, message = "producers must have less than 255 characters")
   private String producers;
 
   @Column(name = "WINNER", nullable = true)
