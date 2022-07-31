@@ -1,8 +1,9 @@
 package br.com.texoit.movielist.movie;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
 
@@ -39,31 +40,39 @@ public class MovieServiceImpl implements MovieService {
   }
 
   @Override
-  public Map<String, Optional<MovieWinnerIntervalsDTO>> findWinnersIntervals() {
+  public Map<String, List<MovieWinnerIntervalsDTO>> findWinnersIntervals() {
     List<Movie> winners = this.movieRepository.getWinners();
-    Map<String, MovieWinnerIntervalsDTO> intervals = new HashMap<String, MovieWinnerIntervalsDTO>();
+    Map<String, List<Movie>> groupedWinners = new HashMap<>();
     winners.forEach(winner -> {
-      MovieWinnerIntervalsDTO movieInterval = new MovieWinnerIntervalsDTO();
-      Boolean winnerExists = intervals.containsKey(winner.getProducers());
-
-      if(winnerExists) movieInterval = intervals.get(winner.getProducers());
-      else movieInterval.setProducer(winner.getProducers());
-
-      if(movieInterval.getPreviousWin() == null || winner.getYear() < movieInterval.getPreviousWin()) 
-        movieInterval.setPreviousWin(winner.getYear());
-
-      if(movieInterval.getFollowingWin() == null || winner.getYear() > movieInterval.getFollowingWin())
-        movieInterval.setFollowingWin(winner.getYear());
-
-      movieInterval.setInterval(movieInterval.getFollowingWin() - movieInterval.getPreviousWin());
-      intervals.put(winner.getProducers(), movieInterval);
+      if (!groupedWinners.containsKey(winner.getProducers()))
+        groupedWinners.put(winner.getProducers(), new ArrayList<Movie>());
+      groupedWinners.get(winner.getProducers()).add(winner);
     });
-    
-    Map<String, Optional<MovieWinnerIntervalsDTO>> result = new HashMap<String, Optional<MovieWinnerIntervalsDTO>>();
-    Comparator<MovieWinnerIntervalsDTO> comparator = Comparator.comparing(MovieWinnerIntervalsDTO::getInterval);
-    result.put("min", intervals.values().stream().filter(interval -> interval.getInterval() > 0).min(comparator));
-    result.put("max", intervals.values().stream().filter(interval -> interval.getInterval() > 0).max(comparator));
-    return result;
+
+    Map<String, List<MovieWinnerIntervalsDTO>> intervals = new HashMap<>();
+    intervals.put("min", new ArrayList<>());
+    intervals.put("max", new ArrayList<>());
+    groupedWinners.keySet().forEach(group -> {
+      List<Movie> movies = groupedWinners.get(group);
+      for (ListIterator<Movie> iterator = movies.listIterator(); iterator.hasNext();) {
+        Movie win = iterator.next();
+        if (!iterator.hasNext()) break;
+        MovieWinnerIntervalsDTO interval = new MovieWinnerIntervalsDTO();
+        interval.setProducer(group);
+        interval.setPreviousWin(win.getYear());
+        interval.setFollowingWin(iterator.next().getYear());
+        interval.setInterval(interval.getFollowingWin() - interval.getPreviousWin());
+        if (intervals.get("min").isEmpty()
+        || interval.getInterval() <= intervals.get("min").get(0).getInterval())
+          intervals.get("min").add(0, interval);
+        intervals.get("min").removeIf(i -> interval.getInterval() < i.getInterval());
+        if (intervals.get("max").isEmpty()
+        || interval.getInterval() >= intervals.get("max").get(0).getInterval())
+          intervals.get("max").add(0, interval);
+        intervals.get("max").removeIf(i -> interval.getInterval() > i.getInterval());
+      }
+    });
+    return intervals;
   }
 
 }

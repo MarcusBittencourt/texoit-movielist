@@ -17,6 +17,6 @@ public interface MovieService {
 
   public abstract Optional<Movie> findById(Long id);
 
-  public abstract Map<String, Optional<MovieWinnerIntervalsDTO>> findWinnersIntervals();
+  public abstract Map<String, List<MovieWinnerIntervalsDTO>> findWinnersIntervals();
 
 }

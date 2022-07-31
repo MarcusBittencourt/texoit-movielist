@@ -2,7 +2,6 @@ package br.com.texoit.movielist.movie;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -68,7 +67,7 @@ public class MovieController {
   }
 
   @GetMapping(path = "/movies/winners", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Map<String, Optional<MovieWinnerIntervalsDTO>>> winners() {
-    return new ResponseEntity<Map<String, Optional<MovieWinnerIntervalsDTO>>>(this.movieService.findWinnersIntervals(), HttpStatus.OK);
+  public ResponseEntity<Map<String, List<MovieWinnerIntervalsDTO>>> winners() {
+    return new ResponseEntity<Map<String, List<MovieWinnerIntervalsDTO>>>(this.movieService.findWinnersIntervals(), HttpStatus.OK);
   }
 }
