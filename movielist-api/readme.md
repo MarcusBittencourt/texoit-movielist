@@ -3,12 +3,20 @@
 ### Instalação
 Projeto de desafio técnico Texo IT.
 
-Consiste em uma API desenvolvida em Java 17 em conjunto com Spring Boot, que realiza o carregamento de um arquivo CSV sobre filmes para um banco de dados H2 embutido em memória. Por meio de chamadas REST é possível obter os premiados na categoria de pior filme, sendo estes os que ganharam no menor intervalo de tempo e também no maior intervalo de tempo. 
+Consiste em uma API desenvolvida em Java 17 em conjunto com Spring Boot, que realiza o carregamento de um arquivo CSV sobre filmes para um banco de dados H2 embutido em memória. Por meio de chamadas REST é possível obter os premiados na categoria de pior filme, sendo estes os que ganharam no menor intervalo de tempo e também no maior intervalo de tempo. Opcionalmente você pode consultar os requisitos da API em `./docs/specification.pdf`
 
-É necessário ter java 17 previamente instaldo para executar o projeto consulte caso necessário. Verifique a sua versão instalada executando:
+É necessário ter Java 17 previamente instalado para executar o projeto. Verifique a sua versão instalada executando:
 
 ```sh
 java --version
+```
+
+Caso necessário execute: 
+
+```sh
+apt-get update
+apt-get upgrade
+apt install openjdk-17-jdk openjdk-17-jre
 ```
 
 Primeiro instale as dependências do projeto a partir do diretório `./movie-list-api`

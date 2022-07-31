@@ -39,4 +39,9 @@ public class MovieWinnerIntervalsDTO {
     this.previousWin = previousWin;
   }
 
+  @Override
+  public String toString() {
+    return "MovieWinnerIntervalsDTO [followingWin=" + followingWin + ", interval=" + interval + ", previousWin="
+        + previousWin + ", producer=" + producer + "]";
+  }
 }
