@@ -1,11 +1,14 @@
 package br.com.texoit.movielist.movie;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,8 +45,26 @@ public class MovieServiceImpl implements MovieService {
   @Override
   public Map<String, List<MovieWinnerIntervalsDTO>> findWinnersIntervals() {
     List<Movie> winners = this.movieRepository.getWinners();
-    Map<String, List<Movie>> groupedWinners = new HashMap<>();
+
+    List<Movie> flattenedMovies = new ArrayList<>();
     winners.forEach(winner -> {
+      Arrays.asList(winner.getProducers().replaceAll(" and ", ",").split(",")).forEach(producer -> {
+        flattenedMovies
+            .add(new Movie(
+              winner.getYear(), 
+              winner.getTitle(), 
+              winner.getStudios(), 
+              producer.trim(), 
+              winner.getWinner())
+            );
+      });
+    });
+
+    Map<String, List<Movie>> groupedWinners = new HashMap<>();
+    flattenedMovies.stream()
+    .sorted(Comparator.comparing(Movie::getProducers).thenComparing(Movie::getYear))
+    .collect(Collectors.toList())
+    .forEach(winner -> {
       if (!groupedWinners.containsKey(winner.getProducers()))
         groupedWinners.put(winner.getProducers(), new ArrayList<Movie>());
       groupedWinners.get(winner.getProducers()).add(winner);
