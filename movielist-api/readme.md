@@ -35,7 +35,7 @@ A partir do diretório `./movielist-api` execute a aplicação com o seguinte co
 
 ### Testes
 
-Para verificar a qualidade do código uma cobertura mínima de testes de integração pode ser executada. Estes testes focaram apenas na camada HTTP, Também é necessário executar o seguinte comando a partir do dirério `./movielist-api`. Como resultado você verá o relário de testes informando quais passaram ou não.
+Para verificar a qualidade do código uma cobertura mínima de testes de integração pode ser executada. Estes testes focaram apenas na camada HTTP, Também é necessário executar o seguinte comando a partir do diretório `./movielist-api`. Como resultado você verá o relatório de testes informando quais passaram ou não.
 
 ```sh
 ./mvnw test
